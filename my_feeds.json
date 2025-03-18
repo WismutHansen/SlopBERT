@@ -1,0 +1,203 @@
+{
+  "feeds": [
+    {
+      "category": "Technology",
+      "name": "Tech Crunch",
+      "url": "https://techcrunch.com/rss"
+    },
+    {
+      "category": "Technology",
+      "name": "Wired",
+      "url": "https://www.wired.com/feed"
+    },
+    {
+      "category": "Technology",
+      "name": "The Verge",
+      "url": "https://www.theverge.com/rss/index.xml"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "AI News",
+      "url": "https://ainews.com/rss"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "DeepMind Blog",
+      "url": "https://deepmind.com/blog/feed/basic/"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "OpenAI Blog",
+      "url": "https://openai.com/blog/rss"
+    },
+    {
+      "category": "Sports",
+      "name": "ESPN",
+      "url": "https://www.espn.com/espn/rss/news",
+      "enabled": false
+    },
+    {
+      "category": "Sports",
+      "name": "Sky Sports",
+      "url": "https://www.skysports.com/rss/12040",
+      "enabled": false
+    },
+    {
+      "category": "News",
+      "name": "Reuters",
+      "url": "https://www.reutersagency.com/feed/"
+    },
+    {
+      "category": "News",
+      "name": "BBC News",
+      "url": "http://feeds.bbci.co.uk/news/rss.xml"
+    },
+    {
+      "category": "Science",
+      "name": "Nature",
+      "url": "https://www.nature.com/nature.rss"
+    },
+    {
+      "category": "Science",
+      "name": "Scientific American",
+      "url": "https://www.scientificamerican.com/rss/feed/"
+    },
+    {
+      "category": "Business",
+      "name": "Financial Times",
+      "url": "https://www.ft.com/rss/home"
+    },
+    {
+      "category": "Business",
+      "name": "Bloomberg",
+      "url": "https://www.bloomberg.com/feeds/sitemap_news.xml"
+    },
+    {
+      "category": "Entertainment",
+      "name": "Variety",
+      "url": "https://variety.com/feed/"
+    },
+    {
+      "category": "Entertainment",
+      "name": "Hollywood Reporter",
+      "url": "https://www.hollywoodreporter.com/feed"
+    },
+    {
+      "category": "Health",
+      "name": "WebMD",
+      "url": "https://rssfeeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC"
+    },
+    {
+      "category": "Health",
+      "name": "Medical News Today",
+      "url": "https://www.medicalnewstoday.com/newsfeeds/rss/medical_news_today.xml"
+    },
+    {
+      "category": "Technology",
+      "name": "Ars Technica",
+      "url": "https://arstechnica.com/rss-feeds/"
+    },
+    {
+      "category": "Technology",
+      "name": "CNET",
+      "url": "https://www.cnet.com/rss/"
+    },
+    {
+      "category": "Technology",
+      "name": "Mashable",
+      "url": "https://mashable.com/feeds/rss"
+    },
+    {
+      "category": "Technology",
+      "name": "Gizmodo",
+      "url": "https://gizmodo.com/rss"
+    },
+    {
+      "category": "Technology",
+      "name": "AnandTech",
+      "url": "https://www.anandtech.com/rss/"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "Machine Learning Mastery",
+      "url": "https://machinelearningmastery.com/blog/feed/"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "MarkTechPost",
+      "url": "https://www.marktechpost.com/feed/"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "BAIR Blog",
+      "url": "https://bair.berkeley.edu/blog/feed.xml"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "Unite.AI",
+      "url": "https://www.unite.ai/feed/"
+    },
+    {
+      "category": "Artificial Intelligence",
+      "name": "Artificial-Intelligence.Blog",
+      "url": "https://artificial-intelligence.blog/feed/"
+    },
+    {
+      "category": "Sports",
+      "name": "Sports Illustrated",
+      "url": "https://www.si.com/rss/si_topstories.rss",
+      "enabled": false
+    },
+    {
+      "category": "Sports",
+      "name": "CBS Sports",
+      "url": "https://www.cbssports.com/rss/headlines/"
+    },
+    {
+      "category": "News",
+      "name": "The New York Times",
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+    },
+    {
+      "category": "News",
+      "name": "CNN",
+      "url": "http://rss.cnn.com/rss/edition.rss"
+    },
+    {
+      "category": "News",
+      "name": "NPR News",
+      "url": "https://www.npr.org/rss/rss.php?id=1001"
+    },
+    {
+      "category": "Science",
+      "name": "SciTechDaily",
+      "url": "https://scitechdaily.com/feed/"
+    },
+    {
+      "category": "Business",
+      "name": "Bloomberg",
+      "url": "https://www.bloomberg.com/feed/podcast/etf-report.xml"
+    },
+    {
+      "category": "Business",
+      "name": "Financial Times",
+      "url": "https://www.ft.com/?format=rss"
+    },
+    {
+      "category": "Health",
+      "name": "WebMD",
+      "url": "https://www.webmd.com/rss/news_breaking.xml"
+    },
+    {
+      "category": "Health",
+      "name": "Medical News Today",
+      "url": "https://www.medicalnewstoday.com/rss"
+    },
+    {
+      "name": "Hacker News",
+      "url": "https://hnrss.org/frontpage",
+      "category": "Technology",
+      "enabled": true
+    }
+  ]
+}
