@@ -151,7 +151,8 @@
     {
       "category": "Sports",
       "name": "CBS Sports",
-      "url": "https://www.cbssports.com/rss/headlines/"
+      "url": "https://www.cbssports.com/rss/headlines/",
+      "enabled": false
     },
     {
       "category": "News",

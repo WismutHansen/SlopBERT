@@ -1,6 +1,7 @@
 dataset.csv
 headlines_cache.json
-
+train_old.py
+train_optimize.py
 results/
 
 # environment variables

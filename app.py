@@ -17,6 +17,15 @@ from rich.live import Live
 
 console = Console()
 
+app_title = """
+            ███████╗██╗      ██████╗ ██████╗ ██████╗ ███████╗██████╗ ████████╗
+            ██╔════╝██║     ██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗╚══██╔══╝
+            ███████╗██║     ██║   ██║██████╔╝██████╔╝█████╗  ██████╔╝   ██║   
+            ╚════██║██║     ██║   ██║██╔═══╝ ██╔══██╗██╔══╝  ██╔══██╗   ██║   
+            ███████║███████╗╚██████╔╝██║     ██████╔╝███████╗██║  ██║   ██║   
+            ╚══════╝╚══════╝ ╚═════╝ ╚═╝     ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   
+            """
+
 ############################################################################
 # KEY CAPTURE FOR ARROW / j / k
 ############################################################################
@@ -95,34 +104,42 @@ def interactive_menu(title: str, items: list[str]) -> int:
     position = 0  # highlight index
 
     def make_table():
-        # Build a Rich Table with highlight on 'position'
-        table = Table(show_header=False)
-        table.title = title
+        table = Table(
+            show_header=False,
+            width=200,
+            box=None,
+            pad_edge=True,
+        )
+
+        # Set justification explicitly on columns
+        table.add_column("", justify="right", width=2)  # Selector arrow
+        table.add_column(title, justify="left")  # Menu items
+
+        table.add_row("", app_title)
         for i, item in enumerate(items):
             if i == position:
-                # Highlight row
+                # Highlight the currently selected item
                 table.add_row(
-                    f"[bold magenta]>[/bold magenta]", f"[reverse]{item}[/reverse]"
+                    "[bold magenta]>[/bold magenta]", f"[reverse]{item}[/reverse]"
                 )
             else:
-                table.add_row(" ", item)
+                table.add_row("", item)
         return table
 
-    with Live(auto_refresh=False, console=console) as live:
+    with Live(console=console, auto_refresh=False) as live:
         while True:
             menu_table = make_table()
             live.update(Align.center(menu_table), refresh=True)
             key = read_key_sequence()
 
-            if key in ("up"):
-                position = max(0, position - 1)
-            elif key in ("down"):
-                position = min(len(items) - 1, position + 1)
-            elif key in ("enter", "space"):
+            if key == "up":
+                position = (position - 1) % len(items)
+            elif key == "down":
+                position = (position + 1) % len(items)
+            elif key == "enter":
                 return position
-            elif key in ("q", "\x03"):  # q or Ctrl+C
+            elif key == "q":
                 return -1
-            # ignore other keys
             live.refresh()
 
 
@@ -212,7 +229,10 @@ def display_status_bar(target=10):
                     pass
 
     table = Table(
-        title="Rating Progress", show_header=True, header_style="bold magenta"
+        title="Rating Progress",
+        show_header=True,
+        header_style="bold magenta",
+        min_width=100,
     )
     table.add_column("Rating", justify="center")
     table.add_column("Count", justify="center")
@@ -668,9 +688,9 @@ def main():
             "Test Model",
             "Exit",
         ]
-        choice = interactive_menu("Main Menu", items)
+        choice = interactive_menu(app_title, items)
         if choice == -1 or choice == 4:
-            console.print(Align.center("[bold red]Exiting TUI.[/bold red]"))
+            console.print(Align.center("[bold red]Exiting slopbert.[/bold red]"))
             break
         elif choice == 0:
             create_or_update_dataset()
