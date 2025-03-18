@@ -410,6 +410,9 @@ def run_create_or_update_dataset(layout, live):
 
 
 def run_train_model(layout, live):
+    from ast import literal_eval
+
+    # Initial message before training begins.
     layout["body"].update(
         Panel(
             Align.center("[bold cyan]Starting model training...[/bold cyan]"),
@@ -417,33 +420,187 @@ def run_train_model(layout, live):
         )
     )
     live.refresh()
+
     cmd = ["python", "train.py"]
     process = subprocess.Popen(
         cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
     )
-    lines = []
-    max_lines = 20
+
+    train_metrics = {}
+    eval_metrics = {}
+    log_lines = []
+    max_log_lines = 5
+
+    # Main loop: read output lines from the training process.
     while True:
         line = process.stdout.readline()
         if not line and process.poll() is not None:
             break
         if line:
             line = line.rstrip("\n")
-            lines.append(line)
-            if len(lines) > max_lines:
-                lines.pop(0)
-            log_text = "\n".join(lines)
-            block = Align.center(log_text, vertical="middle")
-            layout["body"].update(Panel(block, border_style="green", expand=True))
+            try:
+                parsed = literal_eval(line)
+                if isinstance(parsed, dict):
+                    if "eval_loss" in parsed:
+                        eval_metrics = parsed
+                    elif "loss" in parsed:
+                        train_metrics = parsed
+                    else:
+                        log_lines.append(line)
+                        if len(log_lines) > max_log_lines:
+                            log_lines.pop(0)
+                else:
+                    log_lines.append(line)
+                    if len(log_lines) > max_log_lines:
+                        log_lines.pop(0)
+            except Exception:
+                log_lines.append(line)
+                if len(log_lines) > max_log_lines:
+                    log_lines.pop(0)
+
+            # Build Training Metrics Panel.
+            if train_metrics:
+                train_table = Table(title="Training Metrics")
+                train_table.add_column("Metric", justify="right")
+                train_table.add_column("Value", justify="center")
+                for key, value in train_metrics.items():
+                    train_table.add_row(str(key), f"{value}")
+                train_panel = Panel(
+                    Align.center(train_table, vertical="middle"), border_style="blue"
+                )
+            else:
+                train_panel = Panel(
+                    Align.center(
+                        "[dim]No training metrics yet[/dim]", vertical="middle"
+                    ),
+                    border_style="blue",
+                )
+
+            # Build Evaluation Metrics Panel.
+            if eval_metrics:
+                eval_table = Table(title="Evaluation Metrics")
+                eval_table.add_column("Metric", justify="right")
+                eval_table.add_column("Value", justify="center")
+                for key, value in eval_metrics.items():
+                    eval_table.add_row(str(key), f"{value}")
+                eval_panel = Panel(
+                    Align.center(eval_table, vertical="middle"), border_style="green"
+                )
+            else:
+                eval_panel = Panel(
+                    Align.center(
+                        "[dim]No evaluation metrics yet[/dim]", vertical="middle"
+                    ),
+                    border_style="green",
+                )
+
+            # Build Logs Panel with extra height.
+            log_text = "\n".join(log_lines) if log_lines else "[dim]No logs yet[/dim]"
+            log_panel = Panel(
+                Align.center(log_text, vertical="middle"),
+                border_style="magenta",
+                title="Logs",
+                height=20,  # Increased height for logs.
+            )
+
+            # Combine the training and eval panels side by side.
+            metrics_row = Layout(name="metrics_row", size=12)
+            metrics_row.split_row(
+                Layout(train_panel, name="train"),
+                Layout(eval_panel, name="eval"),
+            )
+
+            # Combine the metrics row with the logs panel in a column.
+            combined = Layout(name="combined")
+            combined.split_column(
+                metrics_row,
+                Layout(log_panel, name="logs"),
+            )
+
+            # Update the live layout.
+            layout["body"].update(Panel(combined, border_style="yellow", expand=True))
             live.refresh()
+
+    # After training is complete, append final status to logs.
     retcode = process.poll()
     if retcode == 0:
-        msg = "[green]Training completed successfully.[/green]"
+        final_msg = "[green]Training completed successfully.[/green]"
     else:
-        msg = "[red]Training encountered an error.[/red]"
-    layout["body"].update(Panel(Align.center(msg), expand=True))
+        final_msg = "[red]Training encountered an error.[/red]"
+    log_lines.append(final_msg)
+    if len(log_lines) > max_log_lines:
+        log_lines = log_lines[-max_log_lines:]
+
+    # Rebuild final training panel.
+    if train_metrics:
+        train_table = Table(title="Training Metrics")
+        train_table.add_column("Metric", justify="right")
+        train_table.add_column("Value", justify="center")
+        for key, value in train_metrics.items():
+            train_table.add_row(str(key), f"{value}")
+        train_panel = Panel(
+            Align.center(train_table, vertical="middle"), border_style="blue"
+        )
+    else:
+        train_panel = Panel(
+            Align.center("[dim]No training metrics yet[/dim]", vertical="middle"),
+            border_style="blue",
+        )
+
+    # Rebuild final evaluation panel.
+    if eval_metrics:
+        eval_table = Table(title="Evaluation Metrics")
+        eval_table.add_column("Metric", justify="right")
+        eval_table.add_column("Value", justify="center")
+        for key, value in eval_metrics.items():
+            eval_table.add_row(str(key), f"{value}")
+        eval_panel = Panel(
+            Align.center(eval_table, vertical="middle"), border_style="green"
+        )
+    else:
+        eval_panel = Panel(
+            Align.center("[dim]No evaluation metrics yet[/dim]", vertical="middle"),
+            border_style="green",
+        )
+
+    # Rebuild final logs panel.
+    log_text = "\n".join(log_lines) if log_lines else "[dim]No logs yet[/dim]"
+    log_panel = Panel(
+        Align.center(log_text, vertical="middle"),
+        border_style="magenta",
+        title="Logs",
+        height=15,
+    )
+
+    # Combine training and eval panels side by side.
+    metrics_row = Layout(name="metrics_row", size=12)
+    metrics_row.split_row(
+        Layout(train_panel, name="train"),
+        Layout(eval_panel, name="eval"),
+    )
+
+    # Combine all panels vertically.
+    final_combined = Layout(name="combined")
+    final_combined.split_column(
+        metrics_row,
+        Layout(log_panel, name="logs"),
+    )
+
+    # Add a footer with the key prompt.
+    footer = Panel(
+        Align.center("[bold cyan]Press any key to return to the main menu[/bold cyan]"),
+        border_style="red",
+        height=3,
+    )
+    final_screen = Layout(name="final_screen")
+    final_screen.split_column(Layout(final_combined, ratio=3), Layout(footer, size=3))
+
+    # Display the final screen.
+    layout["body"].update(Panel(final_screen, border_style="yellow", expand=True))
     live.refresh()
-    wait_for_key(layout, live)
+
+    # Wait for a key press before returning.
+    read_key_sequence()
 
 
 def run_manage_sources(layout, live):
