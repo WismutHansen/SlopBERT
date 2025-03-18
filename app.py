@@ -282,26 +282,26 @@ def run_create_or_update_dataset(layout, live):
 
         # Adjusted mapping: 0-1 become "slop", 2-5 become "quality"
         key_to_rating = {
-            "0": "slop",
-            "1": "meh",
-            "2": "ok",
-            "3": "not bad",
-            "4": "good stuff",
-            "5": "banger",
-            "a": "slop",
-            "A": "slop",
-            "s": "meh",
-            "S": "meh",
-            "d": "ok",
-            "D": "ok",
-            "f": "not bad",
-            "F": "not bad",
-            "g": "good stuff",
-            "G": "good stuff",
-            "h": "banger",
-            "H": "banger",
+            "0": 0,
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "a": 0,
+            "A": 0,
+            "s": 1,
+            "S": 1,
+            "d": 2,
+            "D": 2,
+            "f": 3,
+            "F": 3,
+            "g": 4,
+            "G": 4,
+            "h": 5,
+            "H": 5,
         }
-        TARGET_COUNT = 10
+        TARGET_COUNT = 50
         idx = 0
         while idx < len(cache):
             article = cache[idx]
