@@ -10,6 +10,7 @@ dependencies = [
     "feedparser>=6.0.11",
     "matplotlib>=3.10.1",
     "pandas>=2.2.3",
+    "peft>=0.15.1",
     "pytz>=2025.1",
     "rich>=13.9.4",
     "tldextract>=5.1.3",
