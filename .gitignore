@@ -1,18 +1,24 @@
+*.egg-info
+*.py[oc]
+.env
+.venv
+__pycache__/
+build/
 dataset.csv
+dist/
+error.txt
 headlines_cache.json
+logs/
+logs_lora/
+results/
+results_lora/
+results_*/
 train_old.py
 train_optimize.py
-results/
-
-# environment variables
-.env
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
 wheels/
-*.egg-info
-
-# Virtual environments
-.venv
+loss_curve.png
+lora_loss_curve.png
+lora_merged_temp/
+results_quantized_*/
+evaluation_metrics.json
+benchmark*/

@@ -1,6 +1,11 @@
 {
   "feeds": [
     {
+      "category": "Programming",
+      "name": "Better Programming",
+      "url": "https://medium.com/feed/better-programming"
+    },
+    {
       "category": "Technology",
       "name": "Tech Crunch",
       "url": "https://techcrunch.com/rss"
@@ -14,11 +19,6 @@
       "category": "Technology",
       "name": "The Verge",
       "url": "https://www.theverge.com/rss/index.xml"
-    },
-    {
-      "category": "Artificial Intelligence",
-      "name": "AI News",
-      "url": "https://ainews.com/rss"
     },
     {
       "category": "Artificial Intelligence",
@@ -66,11 +66,6 @@
       "category": "Business",
       "name": "Financial Times",
       "url": "https://www.ft.com/rss/home"
-    },
-    {
-      "category": "Business",
-      "name": "Bloomberg",
-      "url": "https://www.bloomberg.com/feeds/sitemap_news.xml"
     },
     {
       "category": "Entertainment",
@@ -140,7 +135,8 @@
     {
       "category": "Artificial Intelligence",
       "name": "Artificial-Intelligence.Blog",
-      "url": "https://artificial-intelligence.blog/feed/"
+      "url": "https://artificial-intelligence.blog/feed/",
+      "enabled": false
     },
     {
       "category": "Sports",
@@ -198,6 +194,24 @@
       "name": "Hacker News",
       "url": "https://hnrss.org/frontpage",
       "category": "Technology",
+      "enabled": true
+    },
+    {
+      "name": "Reuters Top News",
+      "url": "https://www.reutersagency.com/feed/?best-topics=top-news",
+      "category": "News",
+      "enabled": true
+    },
+    {
+      "name": "Ars Technica",
+      "url": "http://feeds.arstechnica.com/arstechnica/index/",
+      "category": "Technology",
+      "enabled": true
+    },
+    {
+      "name": "Nature Briefing",
+      "url": "https://www.nature.com/briefing/rss",
+      "category": "Science",
       "enabled": true
     }
   ]
